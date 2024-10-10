@@ -11,7 +11,7 @@ CONFIG_BOT_TOKEN=""
 CONFIG_ERROR_CHATID=""
 
 # Turning off server after build or no
-POWEROFF=""
+POWEROFF=false
 
 # Script Constants. Required variables throughout the script.
 YELLOW=$(tput setaf 3)
