@@ -297,7 +297,9 @@ if [ -s "out/error.log" ]; then
     # Send a notification that the build has failed.
     build_failed_message="🔴 | <i>ROM compilation failed...</i>
     
-<i>Check out the log below!</i>"
+<i>Check out the log below!</i>
+<code>$(cat out/error.log | sed -n '/Output:/,$p' | sed '1d' | sed 's/\x1b\[[0-9;]*m//g')</code>
+"
 
     edit_message "$build_failed_message" "$CONFIG_ERROR_CHATID" "$build_message_id"
     send_file_to_error_chat "out/error.log" "$CONFIG_ERROR_CHATID"
