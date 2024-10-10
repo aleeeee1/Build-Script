@@ -80,7 +80,7 @@ export BOT_STICKER_URL="https://api.telegram.org/bot$CONFIG_BOT_TOKEN/sendSticke
 export BOT_PIN_URL="https://api.telegram.org/bot$CONFIG_BOT_TOKEN/pinChatMessage"
 
 send_message() {
-    local RESPONSE=$(curl "$BOT_MESSAGE_URL" -d chat_id="$2" \
+    local RESPONSE=$(curl -s "$BOT_MESSAGE_URL" -d chat_id="$2" \
         -d "parse_mode=html" \
         -d "disable_web_page_preview=true" \
         -d text="$1")
@@ -103,14 +103,14 @@ send_file() {
 }
 
 send_sticker() {
-    curl -sL "$1" -o "$ROOT_DIRECTORY/sticker.webp"
+    curl -sL "$1" -o "$ROOT_DIRECTORY/sticker.webp" > /dev/null
 
     local STICKER_FILE="$ROOT_DIRECTORY/sticker.webp"
 
-    curl "$BOT_STICKER_URL" -F sticker=@"$STICKER_FILE" \
+    curl -s "$BOT_STICKER_URL" -F sticker=@"$STICKER_FILE" \
         -F chat_id="$2" \
         -F "is_animated=false" \
-        -F "is_video=false"
+        -F "is_video=false" > /dev/null
 }
 
 send_message_to_error_chat() {
@@ -123,10 +123,10 @@ send_message_to_error_chat() {
 }
 
 send_file_to_error_chat() {
-    curl --progress-bar -F document=@"$1" "$BOT_FILE_URL" \
+    curl -s --progress-bar -F document=@"$1" "$BOT_FILE_URL" \
         -F chat_id="$CONFIG_ERROR_CHATID" \
         -F "disable_web_page_preview=true" \
-        -F "parse_mode=html"
+        -F "parse_mode=html" > /dev/null
 }
 
 fetch_progress() {
