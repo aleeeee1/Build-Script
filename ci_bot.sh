@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load telegram vars from .env
-source .env
+source $(dirname $0)/.env
 
 # Build Configuration. Required variables to compile the ROM.
 CONFIG_LUNCH="pixelage_laurel_sprout-ap3a-userdebug"
