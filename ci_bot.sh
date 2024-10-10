@@ -299,7 +299,7 @@ if [ -s "out/error.log" ]; then
     
 <i>Check out the log below!</i>"
 
-    edit_message_to_error_chat "$build_failed_message" "$CONFIG_ERROR_CHATID" "$build_message_id"
+    edit_message "$build_failed_message" "$CONFIG_ERROR_CHATID" "$build_message_id"
     send_file_to_error_chat "out/error.log" "$CONFIG_ERROR_CHATID"
     send_sticker "$STICKER_URL" "$CONFIG_CHATID"
 else
