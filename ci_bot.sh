@@ -89,17 +89,17 @@ send_message() {
 }
 
 edit_message() {
-    curl "$BOT_EDIT_MESSAGE_URL" -d chat_id="$2" \
+    curl -s "$BOT_EDIT_MESSAGE_URL" -d chat_id="$2" \
         -d "parse_mode=html" \
         -d "message_id=$3" \
-        -d text="$1"
+        -d text="$1" > /dev/null
 }
 
 send_file() {
-    curl --progress-bar -F document=@"$1" "$BOT_FILE_URL" \
+    curl -s --progress-bar -F document=@"$1" "$BOT_FILE_URL" \
         -F chat_id="$2" \
         -F "disable_web_page_preview=true" \
-        -F "parse_mode=html"
+        -F "parse_mode=html" > /dev/null
 }
 
 send_sticker() {
