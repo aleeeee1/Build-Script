@@ -1,14 +1,12 @@
 #!/bin/bash
 
+# Load telegram vars from .env
+source .env
+
 # Build Configuration. Required variables to compile the ROM.
-CONFIG_LUNCH=""
+CONFIG_LUNCH="pixelage_laurel_sprout-ap3a-userdebug"
 CONFIG_OFFICIAL_FLAG=""
 CONFIG_TARGET="bacon"
-
-# Telegram Configuration
-CONFIG_CHATID="-"
-CONFIG_BOT_TOKEN=""
-CONFIG_ERROR_CHATID=""
 
 # Turning off server after build or no
 POWEROFF=false
