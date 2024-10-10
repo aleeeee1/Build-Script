@@ -10,9 +10,6 @@ CONFIG_CHATID="-"
 CONFIG_BOT_TOKEN=""
 CONFIG_ERROR_CHATID=""
 
-# PixelDrain api keys to upload builds
-CONFIG_PDUP_API=""
-
 # Turning off server after build or no
 POWEROFF=""
 
@@ -116,13 +113,6 @@ send_sticker() {
         -F chat_id="$2" \
         -F "is_animated=false" \
         -F "is_video=false"
-}
-
-upload_file() {
-    RESPONSE=$(curl -T "$1" -u :"$CONFIG_PDUP_API" https://pixeldrain.com/api/file/)
-    HASH=$(echo "$RESPONSE" | grep -Po '(?<="id":")[^"]*')
-
-    echo "https://pixeldrain.com/u/$HASH"
 }
 
 send_message_to_error_chat() {
@@ -322,7 +312,6 @@ else
 
     echo -e "$BOLD_GREEN\nStarting to upload the ZIP file now...$RESET\n"
 
-    zip_file_url=$(upload_file "$zip_file")
     zip_file_md5sum=$(md5sum $zip_file | awk '{print $1}')
     zip_file_size=$(ls -sh $zip_file | awk '{print $1}')
 
@@ -333,7 +322,6 @@ else
 <b>• TYPE:</b> <code>$([ "$OFFICIAL" == "1" ] && echo "Official" || echo "Unofficial")</code>
 <b>• SIZE:</b> <code>$zip_file_size</code>
 <b>• MD5SUM:</b> <code>$zip_file_md5sum</code>
-<b>• DOWNLOAD:</b> $zip_file_url
 
 <i>Compilation took $HOURS hours(s) and $MINUTES minutes(s)</i>"
 
