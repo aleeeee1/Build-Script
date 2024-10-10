@@ -22,7 +22,7 @@ OFFICIAL="0"
 ROOT_DIRECTORY="$(pwd)"
 
 # Post Constants. Required variables for posting purposes.
-DEVICE="$(sed -e "s/^.*_//" -e "s/-.*//" <<<"$CONFIG_LUNCH")"
+DEVICE="$(sed -e "s/^[^_]*_//" -e "s/-.*//" <<<"$CONFIG_LUNCH")"
 ROM_NAME="$(sed "s#.*/##" <<<"$(pwd)")"
 OUT="$(pwd)/out/target/product/$DEVICE"
 STICKER_URL="https://raw.githubusercontent.com/Weebo354342432/reimagined-enigma/main/update.webp"
