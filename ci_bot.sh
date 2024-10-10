@@ -242,7 +242,7 @@ lunch "$CONFIG_LUNCH"
 
 if [ $? -eq 0 ]; then
     echo -e "$BOLD_GREEN\nStarting to build now...$RESET"
-    mka "$CONFIG_TARGET" -j$CONFIG_COMPILE_JOBS 2>&1 | tee -a "$ROOT_DIRECTORY/build.log" &
+    mka "$CONFIG_TARGET" -j$CONFIG_COMPILE_JOBS | tee -a "$ROOT_DIRECTORY/build.log" &
 else
     echo -e "$RED\nFailed to lunch "$DEVICE"$RESET"
 
