@@ -310,6 +310,8 @@ else
     zip_file=$(ls "$OUT"/*$DEVICE*.zip | tail -n -1)
 
     echo -e "$BOLD_GREEN\nStarting to upload the ZIP file now...$RESET\n"
+    mega-whoami > /dev/null # assert mega is logged in
+    mega-put "$zip_file"
 
     zip_file_md5sum=$(md5sum $zip_file | awk '{print $1}')
     zip_file_size=$(ls -sh $zip_file | awk '{print $1}')
