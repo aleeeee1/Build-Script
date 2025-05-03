@@ -144,6 +144,58 @@ fetch_progress() {
     fi
 }
 
+generate_ota_json() {
+    local file_path="$1"
+    local filename="$(basename "$file_path")"
+    local product_out="$(dirname "$file_path")"
+    local target_device="$(basename "$product_out")"
+
+    local buildprop="$product_out/system/build.prop"
+    local output="$product_out/$target_device.json"
+
+    # Cleanup old output file
+    if [ -f "$output" ]; then
+        rm "$output"
+    fi
+
+    echo "Generating JSON file data for OTA support for device: $target_device"
+
+    # Extract datetime from build.prop
+    local datetime
+    datetime=$(grep "ro.build.date.utc" "$buildprop" | cut -d'=' -f2)
+
+    # SHA256 ID
+    local id
+    id=$(sha256sum "$file_path" | cut -d' ' -f1)
+
+    # File size
+    local size
+    size=$(stat -c "%s" "$file_path")
+
+    # Version parsing
+    local version
+    version=$(echo "$filename" | cut -d'-' -f2)
+
+    # Output JSON
+    cat <<EOF > "$output"
+{
+  "response": [
+    {
+      "datetime": "$datetime",
+      "filename": "$filename",
+      "id": "$id",
+      "size": $size,
+      "url": "",
+      "version": "$version"
+    }
+  ]
+}
+EOF
+
+    echo "JSON generated at: $output"
+    cat "$output"
+}
+
 # Cleanup Files. Nuke all of the files from previous runs.
 if [ -f "out/error.log" ]; then
     rm -f "out/error.log"
@@ -328,6 +380,7 @@ else
 
     edit_message "$build_finished_message" "$CONFIG_CHATID" "$build_message_id"
     send_sticker "$STICKER_URL" "$CONFIG_CHATID"
+    generate_ota_json "$zip_file"
 fi
 
 if [[ $POWEROFF == true ]]; then
