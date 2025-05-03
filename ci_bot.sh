@@ -4,7 +4,7 @@
 source $(dirname $0)/.env
 
 # Build Configuration. Required variables to compile the ROM.
-CONFIG_LUNCH="pixelage_laurel_sprout-bp1a-userdebug"
+CONFIG_LUNCH="aosp_laurel_sprout-bp1a-userdebug"
 CONFIG_OFFICIAL_FLAG=""
 CONFIG_TARGET="bacon"
 
